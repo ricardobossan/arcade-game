@@ -1,3 +1,11 @@
+/*
+TODO:
+
+* write and  instantiate all enemy objects and write the player object
+  because it's the only reason the canvas is not writing, according
+  to the `console`, in dev tools
+
+*/
 // Enemies our player must avoid
 var Enemy = function() {
 	// Variables applied to each of our instances go here,
