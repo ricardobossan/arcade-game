@@ -9,6 +9,7 @@ TODO:
 */
 // Enemies our player must avoid
 // Constructors can't use arrow functions
+var dt = !NaN;
 var Enemy = function(x, y) {
 	// Variables applied to each of our instances go here,
 	// we've provided one for you to get started
@@ -34,7 +35,7 @@ Enemy.prototype.update = (dt) => {
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
-	dt();
+	this.x += this.speed * dt;
 };
 
 // Draw the enemy on the screen, required method for game

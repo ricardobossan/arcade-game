@@ -41,33 +41,14 @@ describe('Enemy()\'s instances given parameters should pass', function() {
 });
 
 describe('updates enemy\'s position on the screen', function(){
-	// Variables applied to each of our instances go here,
-	// we've provided one for you to get started
-
-	// The image/sprite for our enemies, this uses
-	// a helper we've provided to easily load images
-/*	var Enemy = function(x, y) {
-	this.sprite = 'images/enemy-bug.png';
-	this.x = x;
-	this.y = y;
-	this.speed = Math.floor(Math.random() * 10 + 1);
-	this.initialLocation = {
-		iLX: -100,
-		iLY: this.name === enemy1 ? 223 : this.name === enemy2 ? 280 : this.name === enemy3 ? 320 : null
-	};
-};
-*/
 	describe('relates dt parameter to other variables', function() {
-		beforeEach(function() {
-			var enemy1 = new Enemy();
-			var enemy2 = new Enemy();
-			var enemy3 = new Enemy();
+		it('check if the already created instances of the Enemy() constructor get the newlly setted methods', function() {
+			Enemy.prototype.p = 250;
+			var enemy4 = new Enemy();
+			expect(enemy3.p).toEqual(Enemy.prototype.p);
 		});
-/*			it('check if the already created instances of the Enemy() constructor get the newlly setted methods', function() {
-			Enemy.prototype.onePlusOne = function() {
-			};
-			var enemy4 = new Enemy()
-			expect(this.p).toEqual(2);
+		it('updates enemy\'s position', function() {
+			expect(enemy1.x + enemy1.speed).toEqual(enemy1.x += enemy1.speed * dt);
 		});
-*/	});
+	});
 });
