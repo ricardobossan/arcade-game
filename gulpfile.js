@@ -1,26 +1,45 @@
 /*eslint-env node*/
 const gulp = require('gulp');
-const browserSync = require('browser-sync').create();
+const bs1 = require("browser-sync").create();
+const bs2 = require("browser-sync").create();
 const eslint = require('gulp-eslint');
-const sourcemaps = (require('gulp-sourcemaps'));
+///const sourcemaps = require('gulp-sourcemaps');
+//const jasmine = require('gulp-jasmine');
+//const browserify = require('gulp-browserify');
 
-gulp.task('default', ['scripts', 'lint'], () =>  {
-	gulp.watch("index.html").on('change', browserSync.reload);
-	gulp.watch("js-dev/*.js").on('change', browserSync.reload);
-	gulp.watch('js-dev/*.js', ['scripts', 'lint']);
+gulp.task('default', [/*'scripts',*/ 'lint'], () =>  {
+	gulp.watch("*.html").on('change', bs1.reload);
+	gulp.watch("js-dev/*.js").on('change', bs1.reload);
+	gulp.watch("*.html").on('change', bs2.reload);
+	gulp.watch("js-dev/*.js").on('change', bs2.reload);
+	gulp.watch('js-dev/*.js', [/*'scripts', */'lint']);
+	gulp.watch('spec/EPositionSpec.js').on('change', bs1.reload);
+	gulp.watch('spec/EPositionSpec.js').on('change', bs2.reload);
 
-	browserSync.init({
-		server: "./"
+	bs1.init({
+		server: "./",
+		port: 3000,
+		index: "index.html",
+		ui: false
+
+	});
+	bs2.init({
+		server: "./",
+		port: 8080,
+		index: "SpecRunner.html",
+		ui: false
 	});
 });
 
-gulp.task('scripts', () => {
+// when ready for distribution run this to
+// write the js files into the js folder
+/*gulp.task('scripts', () => {
 	gulp.src('js-dev/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('js'));
 });
-
+*/
 gulp.task('lint', () => {
 	// ESLint ignores files with "node_modules" paths.
 	// So, it's best to have gulp ignore the directory as well.
@@ -37,6 +56,14 @@ gulp.task('lint', () => {
 		// lint error, return the stream and pipe to failAfterError last.
 		.pipe(eslint.failAfterError());
 });
+
+// tests on nodejs terminal
+/*gulp.task('tests', () =>  {
+	gulp.src('spec/**Spec.js')
+		.pipe(jasmine());
+});
+*/
+
 
 // Static Server + watching scss/html files
 /*gulp.task('serve', function() {

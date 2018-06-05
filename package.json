@@ -4,7 +4,7 @@
   "description": "frontend-nanodegree-arcade-game ===============================",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -12,12 +12,18 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
-  "dependencies": {
+  "devDependencies": {
     "browsersync": "0.0.1-security",
     "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
     "gulp-eslint": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.4"
+    "gulp-jasmine": "^4.0.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "jasmine": "^3.1.0",
+    "ws": "3.3.2"
+  },
+  "dependencies": {
+    "@ionic/app-scripts": "^3.1.6"
   },
   "bugs": {
     "url": "https://github.com/ricardobossan/arcade-game/issues"
