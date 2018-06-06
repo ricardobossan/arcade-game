@@ -39,38 +39,30 @@ Enemy.prototype.update = (dt) => {
 	this.x += this.speed * dt;
 };
 
-class Player extends Enemy {
+class Player {
 	constructor(x, y) {
-		super(x, y);
-		//this.x = document.querySelector('canvas').width;
-		super.speed;
+		this.x = x;
+		this.y = y;
+		this.speed = Math.floor(Math.random() * 10 + 1);
 		this.sprite = 'images/char-boy.png';
 	}
 	update(dt) {
-		super.update(dt);
+		// You should multiply any movement by the dt parameter
+		// which will ensure the game runs at the same speed for
+		// all computers.
+		this.x += this.speed * dt;
+	}
+	// Draw the eney on the screen, required method for game
+	render() {
+		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
 }
-/*
-function() {
-	document.getElementsByTagName('canvas');
-};
-*/
-//setTimeout(function() {
-//const canvasWidth = document.querySelector('canvas').width;
 
-//document.on('load', function() {
-var player = new Player(document.querySelector('canvas').width/2, 526);
-//});
-//}, 1000);
-
+var player = new Player(505/2, 526);
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = () => {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-let enemyPosition = () => {
-
 };
 
 // Now write your own player class
@@ -99,17 +91,4 @@ document.addEventListener('keyup', (e) => {
 
 /*
 ####################################TESTS#################################
-*/
-/*
-// trying console.log tests
-var test = function(z, n) {
-	return z + n;
-};
-
-// ##TEST## k(triangulate: test
-/*(function(){
-	console.log(`TESTING: test function 1: ${test(4, 8)}`);
-	console.log(`TESTING: test function 2: ${test(40, -8)}`);
-	console.log(`TESTING: test function 3: ${test(2/3	, 8)}`);
-}());
 */
