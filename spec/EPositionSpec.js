@@ -1,5 +1,6 @@
+/*eslint-disable*/
 describe('Enemy()\'s instances given parameters should pass', function() {
-
+	//var describe, it, expect, Enemy, enemy1, enemy2, enemy3;
 	beforeEach(function(done){
 		Enemy();
 		done();
@@ -48,7 +49,23 @@ describe('updates enemy\'s position on the screen', function(){
 			expect(enemy3.p).toEqual(Enemy.prototype.p);
 		});
 		it('updates enemy\'s position', function() {
-			expect(enemy1.x + enemy1.speed).toEqual(enemy1.x += enemy1.speed * dt);
+			expect(enemy1.x + enemy1.speed * dt).toEqual(enemy1.x += enemy1.speed * dt);
+		});
+	});
+	describe('handles collision with the player', function() {
+		it('when enemy.x + 80px and enemy.y + 80px touches the player.x and player.y', function() {
+			if(enemy1.x + 80 === player.x && enemy1.y + 80 === player.y) {
+				player.reset();
+			}
+			expect(enemy1.x).toBe(enemy1.x === canvas.x/2);
 		});
 	});
 });
+describe('creates the Player Class', function() {
+	describe('extending the Enemy() constructor', function() {
+		it('taking it\'s update() method', function() {
+			expect(Player.update).toEqual(Enemy.update);
+		});
+	});
+});
+

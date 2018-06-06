@@ -9,6 +9,7 @@ TODO:
 */
 // Enemies our player must avoid
 // Constructors can't use arrow functions
+//var canvasX = document.querySelector('canvas').width;
 var dt = !NaN;
 var Enemy = function(x, y) {
 	// Variables applied to each of our instances go here,
@@ -37,6 +38,31 @@ Enemy.prototype.update = (dt) => {
 	// all computers.
 	this.x += this.speed * dt;
 };
+
+class Player extends Enemy {
+	constructor(x, y) {
+		super(x, y);
+		//this.x = document.querySelector('canvas').width;
+		super.speed;
+		this.sprite = 'images/char-boy.png';
+	}
+	update(dt) {
+		super.update(dt);
+	}
+}
+/*
+function() {
+	document.getElementsByTagName('canvas');
+};
+*/
+//setTimeout(function() {
+//const canvasWidth = document.querySelector('canvas').width;
+
+//document.on('load', function() {
+var player = new Player(document.querySelector('canvas').width/2, 526);
+//});
+//}, 1000);
+
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = () => {
