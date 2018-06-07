@@ -10,25 +10,24 @@ TODO:
 // Enemies our player must avoid
 // Constructors can't use arrow functions
 //var canvasX = document.querySelector('canvas').width;
-var dt = !NaN;
-var Enemy = function(x, y) {
+let dt = !NaN;
+let allEnemies = [];
+var Enemy = function(y) {
 	// Variables applied to each of our instances go here,
 	// we've provided one for you to get started
 
 	// The image/sprite for our enemies, this uses
 	// a helper we've provided to easily load images
 	this.sprite = 'images/enemy-bug.png';
-	this.x = x;
-	this.y = y;
+	this.xStart = -100;
+/*	this.x = x;
+*/	this.y = y;
 	this.speed = Math.floor(Math.random() * 10 + 1);
-	//this.iLX = -100;
-	//this.iLY = iLY/*this.name === enemy1 ? 223 : this.name === enemy2 ? 280 : this.name === enemy3 ? 320 : null*/;
+	this.addToArray = function() {
+		allEnemies.push(this);
+	};
 };
 
-
-var enemy1 = new Enemy(-100, 223);
-var enemy2 = new Enemy(-100, 280);
-var enemy3 = new Enemy(-100, 320);
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -72,6 +71,13 @@ Enemy.prototype.render = () => {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
+var enemy1 = new Enemy(142);
+enemy1.addToArray();
+var enemy2 = new Enemy(223);
+enemy2.addToArray();
+var enemy3 = new Enemy(305);
+enemy3.addToArray();
+
 // Place the player object in a variable called player
 
 
