@@ -10,17 +10,14 @@ TODO:
 // Enemies our player must avoid
 // Constructors can't use arrow functions
 //var canvasX = document.querySelector('canvas').width;
-let dt = !NaN;
-let allEnemies = [];
-const img1 = new Image();
-img1.src = 'images/enemy-bug.png';
-img1.alt = 'bug';
+//let dt = !NaN;
 /*document.body.appendChild(img1);
 const img2 = new Image();
 img2.src = 'images/char-boy.png';
 img2.alt = 'boy';
 document.body.appendChild(img2);
-*/var Enemy = function(y) {
+*/
+var Enemy = function(x, y) {
 	// Variables applied to each of our instances go here,
 	// we've provided one for you to get started
 
@@ -28,13 +25,9 @@ document.body.appendChild(img2);
 	// a helper we've provided to easily load images
 
 	this.sprite = 'images/enemy-bug.png';
-	this.xStart = -100;
-//	this.x = x;
+	this.x = x;
 	this.y = y;
 	this.speed = Math.floor(Math.random() * 10 + 1);
-	this.addToArray = function() {
-		allEnemies.push(this);
-	};
 };
 
 
@@ -78,15 +71,21 @@ class Player {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-var enemy1 = new Enemy(142);
-var enemy2 = new Enemy(223);
-var enemy3 = new Enemy(305);
+let allEnemies = [];
+let enemiesY = [143, 223, 305];
+for(let enemyY of enemiesY) {
+	let enemy = new Enemy(0, enemyY);
+	allEnemies.push(enemy);
+}
+/*var enemy1 = new Enemy(0, 142);
+var enemy2 = new Enemy(0, 223);
+var enemy3 = new Enemy(0, 305);
 enemy1.addToArray();
 enemy2.addToArray();
 enemy3.addToArray();
-
+*/
 // Place the player object in a variable called player
-var player = new Player(505/2, 526);
+var player = new Player(252, 526);
 
 
 
@@ -102,7 +101,3 @@ document.addEventListener('keyup', (e) => {
 
 	player.handleInput(allowedKeys[e.keyCode]);
 });
-
-/*
-####################################TESTS#################################
-*/
