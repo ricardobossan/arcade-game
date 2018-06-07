@@ -12,16 +12,25 @@ TODO:
 //var canvasX = document.querySelector('canvas').width;
 let dt = !NaN;
 let allEnemies = [];
-var Enemy = function(y) {
+const img1 = new Image();
+img1.src = 'images/enemy-bug.png';
+img1.alt = 'bug';
+/*document.body.appendChild(img1);
+const img2 = new Image();
+img2.src = 'images/char-boy.png';
+img2.alt = 'boy';
+document.body.appendChild(img2);
+*/var Enemy = function(y) {
 	// Variables applied to each of our instances go here,
 	// we've provided one for you to get started
 
 	// The image/sprite for our enemies, this uses
 	// a helper we've provided to easily load images
+
 	this.sprite = 'images/enemy-bug.png';
 	this.xStart = -100;
-/*	this.x = x;
-*/	this.y = y;
+//	this.x = x;
+	this.y = y;
 	this.speed = Math.floor(Math.random() * 10 + 1);
 	this.addToArray = function() {
 		allEnemies.push(this);
@@ -37,6 +46,15 @@ Enemy.prototype.update = (dt) => {
 	// all computers.
 	this.x += this.speed * dt;
 };
+
+// Draw the enemy on the screen, required method for game
+Enemy.prototype.render = () => {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// Now write your own player class
+// This class requires an update(), render() and
+// a handleInput() method.
 
 class Player {
 	constructor(x, y) {
@@ -57,28 +75,18 @@ class Player {
 	}
 }
 
-var player = new Player(505/2, 526);
-
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = () => {
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var enemy1 = new Enemy(142);
-enemy1.addToArray();
 var enemy2 = new Enemy(223);
-enemy2.addToArray();
 var enemy3 = new Enemy(305);
+enemy1.addToArray();
+enemy2.addToArray();
 enemy3.addToArray();
 
 // Place the player object in a variable called player
+var player = new Player(505/2, 526);
 
 
 

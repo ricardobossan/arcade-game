@@ -35,6 +35,7 @@ describe('This code should set enemies:', () => {
 			});
 		});
 	/*	describe('handles collision with the player', () => {
+		// SOLUTION HERE: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 			it('when enemy.x + 80px and enemy.y + 80px touches the player.x and player.y', () => {
 				if(enemy1.x + 80 === player.x && enemy1.y + 80 === player.y) {
 					player.reset();
