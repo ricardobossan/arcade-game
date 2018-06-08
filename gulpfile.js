@@ -7,7 +7,7 @@ const eslint = require('gulp-eslint');
 //const jasmine = require('gulp-jasmine');
 //const browserify = require('gulp-browserify');
 
-gulp.task('default', [/*'scripts',*/ 'lint'], () =>  {
+gulp.task('default', [/*'scripts', */'lint'], () =>  {
 	gulp.watch("*.html").on('change', bs1.reload);
 	gulp.watch("js-dev/*.js").on('change', bs1.reload);
 	gulp.watch("*.html").on('change', bs2.reload);

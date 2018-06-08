@@ -41,14 +41,14 @@ Enemy.prototype.update = (dt) => {
 };
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = () => {
+Enemy.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
+/*
 class Player {
 	constructor(x, y) {
 		this.x = x;
@@ -67,31 +67,49 @@ class Player {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
 }
+*/
 
+var Player = function(x, y) {
+	// Variables applied to each of our instances go here,
+	// we've provided one for you to get started
+
+	// The image/sprite for our enemies, this uses
+	// a helper we've provided to easily load images
+
+	this.sprite = 'images/char-boy.png';
+	this.x = x;
+	this.y = y;
+	this.speed = Math.floor(Math.random() * 10 + 1);
+};
+Player.prototype.update = function (dt) {
+	// You should multiply any movement by the dt parameter
+	// which will ensure the game runs at the same speed for
+	// all computers.
+	this.x += this.speed * dt;
+};
+// Draw the eney on the screen, required method for game
+Player.prototype.render = function() {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 let allEnemies = [];
-let enemiesY = [143, 223, 305];
+let enemiesY = [63, 143, 223];
 for(let enemyY of enemiesY) {
 	let enemy = new Enemy(0, enemyY);
 	allEnemies.push(enemy);
 }
-/*var enemy1 = new Enemy(0, 142);
-var enemy2 = new Enemy(0, 223);
-var enemy3 = new Enemy(0, 305);
-enemy1.addToArray();
-enemy2.addToArray();
-enemy3.addToArray();
-*/
+
 // Place the player object in a variable called player
-var player = new Player(252, 526);
+let player = new Player(252, 526);
+player.render();
 
 
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', (e) => {
+document.addEventListener('keyup', function (e) {
 	var allowedKeys = {
 		37: 'left',
 		38: 'up',
