@@ -85,7 +85,7 @@ Player.prototype.update = function (dt) {
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
-	this.x += this.speed * dt;
+
 };
 // Draw the eney on the screen, required method for game
 Player.prototype.render = function() {
@@ -102,10 +102,22 @@ for(let enemyY of enemiesY) {
 }
 
 // Place the player object in a variable called player
-let player = new Player(252, 526);
-player.render();
+let player = new Player(200, 400);
 
-
+Player.prototype.handleInput = function(key) {
+	if(key === "up"){
+		this.y -= 10;
+ 	}
+ 	if(key === "down"){
+ 		this.y += 10;
+ 	}
+ 	if(key === "right"){
+		this.x += 10;
+ 	}
+ 	if(key === "left") {
+ 		this.x -= 10;
+ 	}
+ };
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
