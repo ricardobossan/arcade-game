@@ -1,5 +1,5 @@
 /*eslint-disable*/
-describe('This code should set enemies:', () => {
+describe('This code should set the enemy objects:', () => {
 
 	describe('Enemy()\'s instances given parameters should pass', () => {
 		it('Enemy.sprite references correct image location', () => {
@@ -12,29 +12,19 @@ describe('This code should set enemies:', () => {
 		});
 		describe('defines Enemy()\'s instances initial location by pixel', () => {
 			it('initial location value for enemy1', () => {
-				expect(enemy1.y).toBe(142);
+				expect(allEnemies[0].y).toBe(63);
 			});
 			it('initial location value for enemy2', () => {
-				expect(enemy2.y).toBe(223);
+				expect(allEnemies[1].y).toBe(143);
 			});
 			it('initial location value for enemy3', () => {
-				expect(enemy3.y).toBe(305);
+				expect(allEnemies[2].y).toBe(223);
 			});
 		});
 	});
 
 	describe('updates enemy\'s position on the screen', () => {
-		describe('relates dt parameter to other variables', () => {
-			it('check if the already created instances of the Enemy() constructor get the newlly setted properties', () => {
-				Enemy.prototype.p = 250;
-				var enemy4 = new Enemy();
-				expect(enemy3.newProperty).toEqual(Enemy.prototype.newProperty);
-			});
-			it('updates enemy\'s position', () => {
-				expect(enemy1.x + enemy1.speed * dt).toEqual(enemy1.x += enemy1.speed * dt);
-			});
-		});
-	/*	describe('handles collision with the player', () => {
+			/*	describe('handles collision with the player', () => {
 		// SOLUTION HERE: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 			it('when enemy.x + 80px and enemy.y + 80px touches the player.x and player.y', () => {
 				if(enemy1.x + 80 === player.x && enemy1.y + 80 === player.y) {
@@ -44,22 +34,24 @@ describe('This code should set enemies:', () => {
 			});
 		});*/
 	});
-	it('Every instance of the Enemy() constructor should be added to the `allEnemies` array', () => {
-		expect(allEnemies[0].speed, allEnemies[1].speed, allEnemies[2].speed).toBe(enemy1.speed, enemy2.speed, enemy3.speed);
-		});
 });
 describe('creates the Player Class, making sure that', () => {
-	it('the player image is loaded', () => {
+	it('the player object\'s sprite is rendered', () => {
 		expect(player.sprite).toBe('images/char-boy.png');
 	});
-	it('the player object starts at half the screen\'s width and close to the bottom of the screen', () => {
-		expect(player.x).toEqual(505/2);
-		expect(player.y).toEqual(526);
+	it('ctx is defined', () => {
+		/*engine.js, lines 23-29. removed line 25 due to error `undefined`*/
+		canvas = document.createElement('canvas'),
+		ctx = canvas.getContext('2d'),
+		canvas.width = 505;
+		canvas.height = 606;
+		document.body.appendChild(canvas);
+		expect(ctx).not.toBe();
 	});
 	/*it('the update() method works',  () => {
 		expect().toBe();
 	});*/
-	/*it('the render() method works',  () => {
+	/*it('the player.render() method, on engine.js, works',  () => {
 		expect().toBe();
 	});*/
 	/*it('the handleinput() method works', () => {

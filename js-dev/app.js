@@ -70,23 +70,21 @@ class Player {
 */
 
 var Player = function(x, y) {
-	// Variables applied to each of our instances go here,
-	// we've provided one for you to get started
-
-	// The image/sprite for our enemies, this uses
-	// a helper we've provided to easily load images
 
 	this.sprite = 'images/char-boy.png';
 	this.x = x;
 	this.y = y;
 	this.speed = Math.floor(Math.random() * 10 + 1);
+
 };
+
 Player.prototype.update = function (dt) {
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
 
 };
+
 // Draw the eney on the screen, required method for game
 Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -105,20 +103,29 @@ for(let enemyY of enemiesY) {
 let player = new Player(200, 400);
 
 Player.prototype.handleInput = function(key) {
-	if(key === "up"){
-		this.y -= 10;
- 	}
- 	if(key === "down"){
- 		this.y += 10;
- 	}
- 	if(key === "right"){
-		this.x += 10;
- 	}
- 	if(key === "left") {
- 		this.x -= 10;
- 	}
- };
+	// defines the player's limits
 
+	if(key === "up" && this.y > 0){
+		this.y -= 82;
+		if(this === 0) {
+/*			scoreUp(score);
+*/		}
+	}
+	if(key === "down" & this.y < 400){
+		this.y += 82;
+	}
+	if(key === "right" && this.x < 400) {
+		this.x += 100;
+	}
+	if(key === "left" && this.x > 0) {
+		this.x -= 100;
+	}
+};
+
+/*const scoreUp = (score) => {
+	score++;
+};
+*/
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function (e) {
