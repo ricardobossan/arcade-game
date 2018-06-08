@@ -3,8 +3,11 @@ describe('This code should set the enemy objects:', () => {
 
 	describe('Enemy()\'s instances given parameters should pass', () => {
 		it('Enemy.sprite references correct image location', () => {
-			var enemy = new Enemy();
-			expect(enemy.sprite).toBe("images/enemy-bug.png");
+			matchArray = [];
+			allEnemies.forEach(function(element) {
+				matchArray.push(element.sprite)
+			});
+			expect(matchArray[0 || 1 || 2]).toEqual('images/enemy-bug.png');
 		});
 		it('Enemy.speed is a number', () => {
 			var enemy = new Enemy();
@@ -23,7 +26,7 @@ describe('This code should set the enemy objects:', () => {
 		});
 	});
 
-	describe('updates enemy\'s position on the screen', () => {
+//	describe('updates enemy\'s position on the screen', () => {
 			/*	describe('handles collision with the player', () => {
 		// SOLUTION HERE: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 			it('when enemy.x + 80px and enemy.y + 80px touches the player.x and player.y', () => {
@@ -33,7 +36,7 @@ describe('This code should set the enemy objects:', () => {
 
 			});
 		});*/
-	});
+//	});
 });
 describe('creates the Player Class, making sure that', () => {
 	it('the player object\'s sprite is rendered', () => {
@@ -66,5 +69,3 @@ describe('creates the Player Class, making sure that', () => {
 		expect().toBe();
 	});*/
 });
-
-
