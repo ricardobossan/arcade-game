@@ -4,7 +4,6 @@ var Enemy = function(x, y, speed) {
 
 	// The image/sprite for our enemies, this uses
 	// a helper we've provided to easily load images
-
 	this.sprite = 'images/enemy-bug.png';
 	this.x = x;
 	this.y = y;
@@ -21,7 +20,7 @@ Enemy.prototype.update = function(dt) {
 	// which will ensure the game runs at the same speed for
 	// all computers.
 	this.x += this.speed * dt;
-
+	// checks for colliision betwen player and enemy objects
 	(function() {
 		(function() {
 			for(let i = 0; i < allEnemies.length; i++) {
@@ -30,6 +29,7 @@ Enemy.prototype.update = function(dt) {
 				(player.y < allEnemies[i].y + allEnemies[i].height)&&
 				(player.height + player.y > allEnemies[i].y)) {
 					// collision detected!
+					// reset the player object's position to it's starting point
 					player.reset();
 				}
 			}
@@ -126,3 +126,10 @@ document.addEventListener('keyup', function (e) {
 
 	player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// prevents window from rolling up or down
+window.addEventListener("keydown", function(e) {
+	if ([38, 40].indexOf(e.keyCode) > -1) {
+		e.preventDefault();
+	}
+}, false);

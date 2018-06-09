@@ -13,13 +13,6 @@ describe('This code should set the enemy objects:', () => {
 			var enemy = new Enemy();
 			expect(enemy.speed).not.toBe(NaN);
 		});
-		it('Should update enemy\'s speed', () => {
-			matchArray = [];
-			allEnemies.forEach(function(element) {
-				matchArray.push(element.speed);
-			});
-			expect(matchArray[0, 1, 2]).toBe(something);
-		});
 
 		describe('defines Enemy()\'s instances initial location by pixel', () => {
 			it('initial location value for enemy1', () => {
