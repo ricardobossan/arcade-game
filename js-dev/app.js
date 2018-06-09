@@ -1,23 +1,4 @@
-// var global = window;
-/*
-TODO:
-
-* write and  instantiate all enemy objects and write the player object
-  because it's the only reason the canvas is not writing, according
-  to the `console`, in dev tools
-
-*/
-// Enemies our player must avoid
-// Constructors can't use arrow functions
-//var canvasX = document.querySelector('canvas').width;
-//let dt = !NaN;
-/*document.body.appendChild(img1);
-const img2 = new Image();
-img2.src = 'images/char-boy.png';
-img2.alt = 'boy';
-document.body.appendChild(img2);
-*/
-var Enemy = function(x, y) {
+var Enemy = function(x, y, speed) {
 	// Variables applied to each of our instances go here,
 	// we've provided one for you to get started
 
@@ -27,67 +8,76 @@ var Enemy = function(x, y) {
 	this.sprite = 'images/enemy-bug.png';
 	this.x = x;
 	this.y = y;
-	this.speed = Math.floor(Math.random() * 10 + 1);
+	this.speed = speed;
+	this.width = 89;
+	this.height = 71;
 };
 
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = (dt) => {
+Enemy.prototype.update = function(dt) {
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
 	this.x += this.speed * dt;
+
+	(function() {
+		(function() {
+			for(let i = 0; i < allEnemies.length; i++) {
+				if ((player.x < allEnemies[i].x + allEnemies[i].width) &&
+				(player.x + player.width > allEnemies[i].x) &&
+				(player.y < allEnemies[i].y + allEnemies[i].height)&&
+				(player.height + player.y > allEnemies[i].y)) {
+					// collision detected!
+					player.reset();
+				}
+			}
+		})();
+	})();
+
+
+	// when off canvas, reset position of enemy to move across again
+	if (this.x > 550) {
+		this.x = -100;
+		this.speed = 150 + Math.floor(Math.random() * 400);
+	}
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
 };
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-/*
-class Player {
-	constructor(x, y) {
-		this.x = x;
-		this.y = y;
-		this.speed = Math.floor(Math.random() * 10 + 1);
-		this.sprite = 'images/char-boy.png';
-	}
-	update(dt) {
-		// You should multiply any movement by the dt parameter
-		// which will ensure the game runs at the same speed for
-		// all computers.
-		this.x += this.speed * dt;
-	}
-	// Draw the eney on the screen, required method for game
-	render() {
-		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	}
-}
-*/
-
 var Player = function(x, y) {
 
 	this.sprite = 'images/char-boy.png';
 	this.x = x;
 	this.y = y;
-	this.speed = Math.floor(Math.random() * 10 + 1);
+	this.width = 10;
+	this.height = 10;
 
+	this.reset = function () {
+		player.x = 200;
+		player.y = 400;
+	};
 };
 
-Player.prototype.update = function (dt) {
-	// You should multiply any movement by the dt parameter
-	// which will ensure the game runs at the same speed for
-	// all computers.
-
+Player.prototype.update = function(dt) {
 };
 
 // Draw the eney on the screen, required method for game
 Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+	ctx.font = '30px impact';
+	ctx.fillStyle = 'white';
+	ctx.fillText(`Score: ${score}`, 380, 104);
+	ctx.strokeText(`Score: ${score}`, 380, 104);
+
 };
 
 // Now instantiate your objects.
@@ -95,21 +85,18 @@ Player.prototype.render = function() {
 let allEnemies = [];
 let enemiesY = [63, 143, 223];
 for(let enemyY of enemiesY) {
-	let enemy = new Enemy(0, enemyY);
+	let enemy = new Enemy(0, enemyY, 150 + Math.floor(Math.random() * 400));
 	allEnemies.push(enemy);
 }
 
 // Place the player object in a variable called player
 let player = new Player(200, 400);
 
+let score = 0;
 Player.prototype.handleInput = function(key) {
-	// defines the player's limits
-
+	// defines the player's inputs and limits
 	if(key === "up" && this.y > 0){
 		this.y -= 82;
-		if(this === 0) {
-/*			scoreUp(score);
-*/		}
 	}
 	if(key === "down" & this.y < 400){
 		this.y += 82;
@@ -120,12 +107,13 @@ Player.prototype.handleInput = function(key) {
 	if(key === "left" && this.x > 0) {
 		this.x -= 100;
 	}
+	if(player.y <= -10) {
+		score++;
+		player.reset();
+	}
 };
 
-/*const scoreUp = (score) => {
-	score++;
-};
-*/
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function (e) {
