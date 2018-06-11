@@ -27,6 +27,8 @@ Enemy.prototype.update = function(dt) {
 					// collision detected!
 					// reset the player object's position to it's starting point
 					player.reset();
+					// zores score
+					score = 0;
 				}
 			}
 		})();
@@ -47,6 +49,8 @@ Enemy.prototype.render = function() {
 
 // Player's constructor function
 var Player = function(x, y) {
+	// sets game's initial score to -
+	score = 0;
 
 	this.sprite = 'images/char-boy.png';
 	this.x = x;
@@ -54,16 +58,18 @@ var Player = function(x, y) {
 	this.width = 10;
 	this.height = 10;
 
+	// returns player object to it's initial location
 	this.reset = function () {
 		player.x = 200;
 		player.y = 400;
 	};
 };
 
+
 Player.prototype.update = function(dt) {
 };
 
-// Draw the eney on the screen, required method for game
+// Draw the enemy on the screen, required method for game
 Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
@@ -86,11 +92,10 @@ for(let enemyY of enemiesY) {
 	allEnemies.push(enemy);
 }
 
-// Place the player object in a variable called player
+// instantiates the player object, from the Player constructor
 let player = new Player(200, 400);
 
-let score = 0;
-
+// handles player movement on input, and keeps it within canvas limits
 Player.prototype.handleInput = function(key) {
 	// defines the player's inputs and limits
 	if(key === "up" && this.y > 0){
