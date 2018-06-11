@@ -141,6 +141,7 @@ window.addEventListener("keydown", function(e) {
 // High score
 
 /*
+// # [An Introductiono to Local Storage with JavaScript](https://www.youtube.com/watch?v=T9GWHFDcELQ)
 // Set and Set Local Storage items
 
 localStorage.setItem('siteName', 'My Site');
