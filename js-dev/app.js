@@ -116,6 +116,7 @@ Player.prototype.handleInput = function(key) {
 	}
 };
 
+//document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Player</h1>');
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -136,3 +137,48 @@ window.addEventListener("keydown", function(e) {
 		e.preventDefault();
 	}
 }, false);
+
+// High score
+
+/*
+// Set and Set Local Storage items
+
+localStorage.setItem('siteName', 'My Site');
+localStorage.setItem('siteDescription', 'siteDescription');
+
+siteName = localStorage.getItem('siteName');
+header.innerHTML = siteName;
+
+// ## Iinnefficient way to store variables. Lots and lots of variables
+var siteName = 'My Site',
+	siteDescription = 'Another JS Site';
+
+localStorage.setItem('siteName', siteName);
+localStorage.setItem('siteDescription', siteDescription);
+
+// Better way is to store the multiple data in a single local key/value pair
+// in order for local storage to store information, it need to store it as strings.
+// json files store strings
+*/
+
+document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Javascript Scoreboard</h1>');
+var header = document.getElementsByTagName('h1')[0],
+	siteData = {
+		siteName: 'My Site',
+		siteDesccription: 'Another JS Site'
+	},
+	localData;
+
+
+localStorage.setItem( 'siteData', JSON.stringify(siteData));
+
+localData = JSON.parse(localStorage.getItem('siteData'));
+
+console.log(localData);
+console.log(localStorage.getItem('siteData'));
+
+header.innerHTML = localData.siteName;
+
+// removeItem makes the item flash quickly, chaing the HTML,
+// then vanishing from the Application//Resources panel, at chrome dev tools
+//localStorage.removeItem('siteName');
