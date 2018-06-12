@@ -14,6 +14,7 @@
  */
 
 var Engine = (function(global) {
+
 	/* Predefine the variables we'll be using within this scope,
 	 * create the canvas element, grab the 2D context for that canvas
 	 * set the canvas elements height/width and add it to the DOM.
@@ -94,6 +95,7 @@ var Engine = (function(global) {
 			enemy.update(dt);
 		});
 		player.update();
+
 	}
 
 	/* This function initially draws the "game level", it will then call
@@ -106,6 +108,7 @@ var Engine = (function(global) {
 		/* This array holds the relative URL to the image used
 		 * for that particular row of the game level.
 		 */
+
 		var rowImages = [
 				'images/water-block.png',   // Top row is water
 				'images/stone-block.png',   // Row 1 of 3 of stone

@@ -1,5 +1,11 @@
-
-var i = 0,
+// Logic for timer, located at top-right corner
+let
+	s = 0,
+	m = 0,
+	h = 0,
+	round = 1,
+	gameSpeed = 1,
+	arrivedXTimes = 0,
 	score = 0,
 	sprite = [
 		'images/char-boy.png',
@@ -8,8 +14,26 @@ var i = 0,
 		'images/char-pink-girl.png',
 		'images/char-princess-girl.png'
 	];
+
+const timer = function myTimer() {
+	s++;
+	if (s >= 60) {
+		s = 0;
+		m++;
+		if (m >= 60) {
+			m = 0;
+			h++;
+		}
+	}
+
+	// set to run on 1sec intervals, each time the function iterates over itself, until the game is through
+	setTimeout(myTimer, 1000);
+};
+// runs timer function after 1 second
+setTimeout(timer, 1000);
+
 // Enemy's constructor function
-var Enemy = function(x, y, speed) {
+let Enemy = function(x, y, speed) {
 
 	this.sprite = 'images/enemy-bug.png';
 	this.x = x;
@@ -36,8 +60,23 @@ Enemy.prototype.update = function(dt) {
 				(player.height + player.y > allEnemies[i].y)) {
 					// collision detected!
 					// reset the player object's position to it's starting point
-					player.resetPosition();
-					player.sprite = sprite[0];
+					setTimeout(function() {
+						player.resetPosition();
+						(function askName() {
+							var person = window.prompt("Game Over! Please, enter your name:", "Name");
+							if(person === null || person === "Name" || person === "") {
+							//txt="Don't be shy!";
+								window.alert("Don't be shy!");
+								askName();
+							} else {
+								window.alert(`HIGH SCORE:\n\n1 here\n2 the\n3 json\n4 file\n5 will show locally saved data`);
+						}
+					})();
+				}, 500);
+					player.gameOver();
+					player = new Player(200, 400, sprite[0]);
+
+//					player.sprite = sprite[0];
 
 				}
 			}
@@ -47,7 +86,7 @@ Enemy.prototype.update = function(dt) {
 	// when off canvas, reset the x axis position of enemy to move across again
 	if (this.x > 550) {
 		this.x = -100;
-		this.speed = 150 + Math.floor(Math.random() * 400);
+		this.speed = 150 + (gameSpeed * (Math.floor(Math.random() * 300)));
 	}
 };
 
@@ -59,9 +98,6 @@ Enemy.prototype.render = function() {
 
 // Player's constructor function
 var Player = function(x, y, sprite) {
-	// sets game's initial score to -
-	score = 0;
-
 	this.sprite = sprite;
 	this.x = x;
 	this.y = y;
@@ -72,10 +108,20 @@ var Player = function(x, y, sprite) {
 	this.resetPosition = function () {
 		player.x = 200;
 		player.y = 400;
-		score = 0;
-		i = 0;
-		//player.sprite = sprite[i];
+//		arrivedXTimes = 0;
+	};
 
+	// returns player object to it's initial location
+	this.gameOver = function () {
+		h = 0;
+		m = 0;
+		s = 0;
+		player.x = 200;
+		player.y = 400;
+		gameSpeed = 1.1;
+		round = 1;
+		score = 0;
+		arrivedXTimes = 0;
 	};
 };
 
@@ -87,12 +133,24 @@ Player.prototype.update = function(dt) {
 Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
+	// each time the player reaches the water
+	ctx.font = '45px impact';
+	ctx.fillStyle = 'white';
+	ctx.fillText(`Round ${round}`, 10, 108);
+	ctx.strokeText(`Round ${round}`, 10, 108);
+
+
+	// each time the player reaches the water
+	ctx.font = '24px impact';
+	ctx.fillStyle = 'white';
+	ctx.fillText(`${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`, 380, 82);
+	ctx.strokeText(`${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`, 380, 82);
 	// updates the score counter, at the top-right corner of the canvas,
 	// each time the player reaches the water
 	ctx.font = '30px impact';
 	ctx.fillStyle = 'white';
-	ctx.fillText(`Score: ${score}`, 380, 104);
-	ctx.strokeText(`Score: ${score}`, 380, 104);
+	ctx.fillText(`Score: ${score}`, 380, 118);
+	ctx.strokeText(`Score: ${score}`, 380, 118);
 };
 
 // creates 3 instances of the Enemy constructor, at the positions provided by
@@ -102,7 +160,7 @@ Player.prototype.render = function() {
 let allEnemies = [];
 let enemiesY = [63, 143, 223];
 for(let enemyY of enemiesY) {
-	let enemy = new Enemy(0, enemyY, 150 + Math.floor(Math.random() * 400));
+	let enemy = new Enemy(0, enemyY, 150 + (gameSpeed * (Math.floor(Math.random() * 400))));
 	allEnemies.push(enemy);
 }
 
@@ -125,30 +183,18 @@ Player.prototype.handleInput = function(key) {
 		this.x -= 100;
 	}
 	if(player.y <= -10) {
-		i++;
+		arrivedXTimes++;
 		player.x = 200;
 		player.y = 400;
-		player.sprite = sprite[i];
-		//player = new Player(200, 400, sprite[i]);
+		//player.sprite = sprite[arrivedXTimes];
+		player = new Player(200, 400, sprite[arrivedXTimes]);
 		score++;
 
-		if(score === 5) {
-			player.sprite = sprite[0];
-			setTimeout(function() {
-				player.resetPosition();
-				(function askName() {
-					var person = window.prompt("Congratulations! Please, enter your name:", "Name");
-					if(person === null || person === "Name" || person === "") {
-						//txt="Don't be shy!";
-						window.alert("Don't be shy!");
-						askName();
-					} else {
-						window.alert(`Good work, ${person}!\n\n`);
-						window.alert(`HIGH SCORE:\n\n1 here\n2 the\n3 json\n4 file\n5 will show locally saved data`);
-						//txt =`Hello, ${person}!`;
-					}
-				})();
-			}, 500);
+		if(arrivedXTimes % 5 === 0) {
+			arrivedXTimes = 0;
+			round ++;
+			gameSpeed *= 1.3;
+			player = new Player(200, 400, sprite[arrivedXTimes]);
 		}
 	}
 };
