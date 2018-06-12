@@ -56,16 +56,16 @@ describe('creates the Player Class, making sure that', () => {
 });
 describe('A Prompt event', function() {
 	beforeEach(function(done) {
-		spyOn(window, 'prompt');
-		for(var i = 0; i < 35; i++) {
+		spyOn(window, 'alert');
+		for(var i = 0; i < 25; i++) {
 			player.handleInput("up");
-			player.y <= -10;
+
 		}
 		setTimeout(function() {
 		done();
 	}, 1000);
 	})
 	it('should come up ', () => {
-		expect(window.prompt).toHaveBeenCalled();
+		expect(window.alert).toHaveBeenCalled();
 	})
 })

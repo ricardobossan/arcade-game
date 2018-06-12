@@ -1,3 +1,4 @@
+window.alert(`Help the 5 children make it to the other side!`);
 // Logic for timer, located at top-right corner
 let
 	s = 0,
@@ -32,6 +33,11 @@ const timer = function myTimer() {
 // runs timer function after 1 second
 setTimeout(timer, 1000);
 
+
+let scoreCounter = (function(){
+	return score;
+}());
+
 // Enemy's constructor function
 let Enemy = function(x, y, speed) {
 
@@ -46,6 +52,15 @@ let Enemy = function(x, y, speed) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
+								let
+									highScore = {
+										"person1": 50,
+										"person2": 40,
+										"person3": 30,
+										"person4": 20,
+										"person5": 10
+									},
+									localData;
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
@@ -65,19 +80,42 @@ Enemy.prototype.update = function(dt) {
 						(function askName() {
 							var person = window.prompt("Game Over! Please, enter your name:", "Name");
 							if(person === null || person === "Name" || person === "") {
-							//txt="Don't be shy!";
 								window.alert("Don't be shy!");
 								askName();
 							} else {
-								window.alert(`HIGH SCORE:\n\n1 here\n2 the\n3 json\n4 file\n5 will show locally saved data`);
-						}
-					})();
-				}, 500);
+								person = person;
+								if(scoreCounter >= Object.keys(highScore)[0]) {
+									Object.keys(highScore)[0] = person;
+									Object.values(highScore)[0] = scoreCounter;
+								}
+								if(scoreCounter >= Object.keys(highScore)[1]) {
+									Object.keys(highScore)[1] = person;
+									Object.values(highScore)[1] = scoreCounter;
+								}
+								if(scoreCounter >= Object.keys(highScore)[2]) {
+									Object.keys(highScore)[2] = person;
+									Object.values(highScore)[2] = scoreCounter;
+								}
+								if(scoreCounter >= Object.keys(highScore)[3]) {
+									Object.keys(highScore)[3] = person;
+									Object.values(highScore)[3] = scoreCounter;
+								}
+								if(scoreCounter >= Object.keys(highScore)[4]) {
+									Object.keys(highScore)[4] = person;
+									Object.values(highScore)[4] = scoreCounter;
+								}
+
+								localStorage.setItem( 'highScore', JSON.stringify(highScore));
+
+								localData = JSON.parse(localStorage.getItem('highScore'));
+
+								//console.log(person);
+								window.alert(`HIGH SCORE: \n\n${Object.keys(highScore)[0]}  :  ${Object.values(highScore)[0]}\n${Object.keys(highScore)[1]}  :  ${Object.values(highScore)[1]}\n${Object.keys(highScore)[2]}  :  ${Object.values(highScore)[2]}\n${Object.keys(highScore)[3]}  :  ${Object.values(highScore)[3]}\n${Object.keys(highScore)[4]}  :  ${Object.values(highScore)[4]}`);
+							}
+						})();
+					}, 500);
 					player.gameOver();
 					player = new Player(200, 400, sprite[0]);
-
-//					player.sprite = sprite[0];
-
 				}
 			}
 		})();
@@ -193,6 +231,7 @@ Player.prototype.handleInput = function(key) {
 		if(arrivedXTimes % 5 === 0) {
 			arrivedXTimes = 0;
 			round ++;
+			window.alert(`Congratulations!! You unlocked the Round ${round} difficulty!`);
 			gameSpeed *= 1.3;
 			player = new Player(200, 400, sprite[arrivedXTimes]);
 		}
@@ -256,23 +295,28 @@ localStorage.setItem('siteDescription', siteDescription);
 // json files store strings
 */
 
-document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Javascript Scoreboard</h1>');
+/*document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Javascript Scoreboard</h1>');
 var header = document.getElementsByTagName('h1')[0],
-	siteData = {
-		siteName: 'My Site',
-		siteDesccription: 'Another JS Site'
+*/
+var
+	highScore = {
+		person: 50,
+		person2: 40,
+		person3: 30,
+		person4: 20,
+		person5: 10
 	},
 	localData;
 
+/*
+localStorage.setItem( 'person', JSON.stringify(person));
 
-localStorage.setItem( 'siteData', JSON.stringify(siteData));
-
-localData = JSON.parse(localStorage.getItem('siteData'));
-
+localData = JSON.parse(localStorage.getItem('person'));
+*/
 console.log(localData);
-console.log(localStorage.getItem('siteData'));
+console.log(localStorage.getItem('highScore'));
 
-header.innerHTML = localData.siteName;
+//header.innerHTML = localData.siteName;
 
 // removeItem makes the item flash quickly, chaing the HTML,
 // then vanishing from the Application//Resources panel, at chrome dev tools
