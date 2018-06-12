@@ -26,19 +26,11 @@ describe('This code should set the enemy objects:', () => {
 			});
 		});
 	});
-
-/*	describe('handles collision with the player', () => {
-		// SOLUTION HERE: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-			it('when enemy.x + 80px and enemy.y + 80px touches the player.x and player.y', () => {
-				if(enemy1.x + 80 === player.x && enemy1.y + 80 === player.y) {
-					player.reset();
-			}
-		});
-	});*/
 });
 describe('creates the Player Class, making sure that', () => {
+	player = new Player(200, 400, sprite[0, 1, 2, 3, 4]);
 	it('the player object\'s sprite is rendered', () => {
-		expect(player.sprite).toBe('images/char-boy.png');
+		expect(player.sprite).toContain("images/char-");
 	});
 	it('ctx is defined', () => {
 		/*engine.js, lines 23-29. removed line 25 due to error `undefined`*/
@@ -53,12 +45,27 @@ describe('creates the Player Class, making sure that', () => {
 		score = 0;
 		(() => {
 			for(var i = 0; i <= 4; i++) {
-				player.y -= 82;
-				if(player.y <= -10) {
-					score++;
-				}
+				player.handleInput('up');
+				//if(player.y <= -10) {
+				//	score++;
+				//}
 			}
 		})();
 		expect(score).toEqual(1);
 	})
 });
+describe('A Prompt event', function() {
+	beforeEach(function(done) {
+		spyOn(window, 'prompt');
+		for(var i = 0; i < 35; i++) {
+			player.handleInput("up");
+			player.y <= -10;
+		}
+		setTimeout(function() {
+		done();
+	}, 1000);
+	})
+	it('should come up ', () => {
+		expect(window.prompt).toHaveBeenCalled();
+	})
+})

@@ -1,3 +1,13 @@
+
+var i = 0,
+	score = 0,
+	sprite = [
+		'images/char-boy.png',
+		'images/char-cat-girl.png',
+		'images/char-horn-girl.png',
+		'images/char-pink-girl.png',
+		'images/char-princess-girl.png'
+	];
 // Enemy's constructor function
 var Enemy = function(x, y, speed) {
 
@@ -22,19 +32,19 @@ Enemy.prototype.update = function(dt) {
 			for(let i = 0; i < allEnemies.length; i++) {
 				if ((player.x < allEnemies[i].x + allEnemies[i].width) &&
 				(player.x + player.width > allEnemies[i].x) &&
-				(player.y < allEnemies[i].y + allEnemies[i].height)&&
+				(player.y < allEnemies[i].y + allEnemies[i].height) &&
 				(player.height + player.y > allEnemies[i].y)) {
 					// collision detected!
 					// reset the player object's position to it's starting point
-					player.reset();
-					// zores score
-					score = 0;
+					player.resetPosition();
+					player.sprite = sprite[0];
+
 				}
 			}
 		})();
 	})();
 
-	// when off canvas, reset position of enemy to move across again
+	// when off canvas, reset the x axis position of enemy to move across again
 	if (this.x > 550) {
 		this.x = -100;
 		this.speed = 150 + Math.floor(Math.random() * 400);
@@ -48,20 +58,24 @@ Enemy.prototype.render = function() {
 };
 
 // Player's constructor function
-var Player = function(x, y) {
+var Player = function(x, y, sprite) {
 	// sets game's initial score to -
 	score = 0;
 
-	this.sprite = 'images/char-boy.png';
+	this.sprite = sprite;
 	this.x = x;
 	this.y = y;
 	this.width = 10;
 	this.height = 10;
 
 	// returns player object to it's initial location
-	this.reset = function () {
+	this.resetPosition = function () {
 		player.x = 200;
 		player.y = 400;
+		score = 0;
+		i = 0;
+		//player.sprite = sprite[i];
+
 	};
 };
 
@@ -93,7 +107,7 @@ for(let enemyY of enemiesY) {
 }
 
 // instantiates the player object, from the Player constructor
-let player = new Player(200, 400);
+let player = new Player(200, 400, sprite[0]);
 
 // handles player movement on input, and keeps it within canvas limits
 Player.prototype.handleInput = function(key) {
@@ -111,11 +125,45 @@ Player.prototype.handleInput = function(key) {
 		this.x -= 100;
 	}
 	if(player.y <= -10) {
+		i++;
+		player.x = 200;
+		player.y = 400;
+		player.sprite = sprite[i];
+		//player = new Player(200, 400, sprite[i]);
 		score++;
-		player.reset();
+
+		if(score === 5) {
+			player.sprite = sprite[0];
+			setTimeout(function() {
+				player.resetPosition();
+				(function askName() {
+					var person = window.prompt("Congratulations! Please, enter your name:", "Name");
+					if(person === null || person === "Name" || person === "") {
+						//txt="Don't be shy!";
+						window.alert("Don't be shy!");
+						askName();
+					} else {
+						window.alert(`Good work, ${person}!\n\n`);
+						window.alert(`HIGH SCORE:\n\n1 here\n2 the\n3 json\n4 file\n5 will show locally saved data`);
+						//txt =`Hello, ${person}!`;
+					}
+				})();
+			}, 500);
+		}
 	}
 };
 
+
+/*const victory = (() => {
+	if(score === 5) {
+		var person = window.confirm("Congratulations! Please, enter your name:", "Unknow");
+		if(person === null || person === "") {
+			txt = "Don't be shy!";
+		} else {"Hello" + person + "!";
+		}
+	}
+})();*/
+//victory();
 //document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Player</h1>');
 
 // This listens for key presses and sends the keys to your
@@ -150,7 +198,7 @@ localStorage.setItem('siteDescription', 'siteDescription');
 siteName = localStorage.getItem('siteName');
 header.innerHTML = siteName;
 
-// ## Iinnefficient way to store variables. Lots and lots of variables
+// ## Innefficient way to store variables. Lots and lots of variables
 var siteName = 'My Site',
 	siteDescription = 'Another JS Site';
 
