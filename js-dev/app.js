@@ -271,6 +271,13 @@ window.addEventListener("keydown", function(e) {
 	}
 }, false);
 
+// prevents window from rolling left or right
+window.addEventListener("keydown", function(e) {
+	if ([37, 39].indexOf(e.keyCode) > -1) {
+		e.preventDefault();
+	}
+}, false);
+
 // High score
 
 /*
