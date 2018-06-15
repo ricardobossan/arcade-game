@@ -22,11 +22,11 @@ if(localStorage.length >= 1) {
 	highScore = JSON.parse(localStorage.getItem("stringfiedHScore"));
 } else {
 	highScore = [
-		["Player 1", 50],
-		["Player 2", 40],
-		["Player 3", 30],
-		["Player 4", 20],
-		["Player 5", 10]
+		["Guts", 50],
+		["Griffith", 40],
+		["Casca", 30],
+		["Judeu", 20],
+		["Pippin", 10]
 	];
 }
 
@@ -94,15 +94,15 @@ Enemy.prototype.update = function(dt) {
 									highScore[1][0] = person;
 									highScore[1][1] = scoreCounter;
 								}
-								if(scoreCounter >= 3 && scoreCounter < 40) {
+								if(scoreCounter >= 30 && scoreCounter < 40) {
 									highScore[2][0] = person;
 									highScore[2][1] = scoreCounter;
 								}
-								if(scoreCounter >= 2 && scoreCounter < 3) {
+								if(scoreCounter >= 22 && scoreCounter < 30) {
 									highScore[3][0] = person;
 									highScore[3][1] = scoreCounter;
 								}
-								if(scoreCounter >= 1 && scoreCounter < 2) {
+								if(scoreCounter >= 10 && scoreCounter < 22) {
 									highScore[4][0] = person;
 									highScore[4][1] = scoreCounter;
 								}
