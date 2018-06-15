@@ -8,13 +8,27 @@ let
 	gameSpeed = 1,
 	arrivedXTimes = 0,
 	score = 0,
+	scoreCounter,
 	sprite = [
 		'images/char-boy.png',
 		'images/char-cat-girl.png',
 		'images/char-horn-girl.png',
 		'images/char-pink-girl.png',
 		'images/char-princess-girl.png'
+	],
+	highScore;
+
+if(localStorage === undefined) {
+	highScore = [
+		["Player 1", 50],
+		["Player 2", 40],
+		["Player 3", 30],
+		["Player 4", 20],
+		["Player 5", 10]
 	];
+} else {
+	highScore = JSON.parse(localStorage.getItem("stringfiedHScore"));
+}
 
 const timer = function myTimer() {
 	s++;
@@ -34,10 +48,8 @@ const timer = function myTimer() {
 setTimeout(timer, 1000);
 
 
-let scoreCounter = (function(){
-	return score;
-}());
 
+console.log(score);
 // Enemy's constructor function
 let Enemy = function(x, y, speed) {
 
@@ -52,15 +64,6 @@ let Enemy = function(x, y, speed) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-								let
-									highScore = {
-										"person1": 50,
-										"person2": 40,
-										"person3": 30,
-										"person4": 20,
-										"person5": 10
-									},
-									localData;
 	// You should multiply any movement by the dt parameter
 	// which will ensure the game runs at the same speed for
 	// all computers.
@@ -83,34 +86,34 @@ Enemy.prototype.update = function(dt) {
 								window.alert("Don't be shy!");
 								askName();
 							} else {
-								person = person;
-								if(scoreCounter >= Object.keys(highScore)[0]) {
-									Object.keys(highScore)[0] = person;
-									Object.values(highScore)[0] = scoreCounter;
+								if(scoreCounter >= 50) {
+									highScore[0][0] = person;
+									highScore[0][1] = scoreCounter;
 								}
-								if(scoreCounter >= Object.keys(highScore)[1]) {
-									Object.keys(highScore)[1] = person;
-									Object.values(highScore)[1] = scoreCounter;
+								if(scoreCounter >= 40 && scoreCounter < 50) {
+									highScore[1][0] = person;
+									highScore[1][1] = scoreCounter;
 								}
-								if(scoreCounter >= Object.keys(highScore)[2]) {
-									Object.keys(highScore)[2] = person;
-									Object.values(highScore)[2] = scoreCounter;
+								if(scoreCounter >= 3 && scoreCounter < 40) {
+									highScore[2][0] = person;
+									highScore[2][1] = scoreCounter;
 								}
-								if(scoreCounter >= Object.keys(highScore)[3]) {
-									Object.keys(highScore)[3] = person;
-									Object.values(highScore)[3] = scoreCounter;
+								if(scoreCounter >= 2 && scoreCounter < 3) {
+									highScore[3][0] = person;
+									highScore[3][1] = scoreCounter;
 								}
-								if(scoreCounter >= Object.keys(highScore)[4]) {
-									Object.keys(highScore)[4] = person;
-									Object.values(highScore)[4] = scoreCounter;
+								if(scoreCounter >= 1 && scoreCounter < 2) {
+									highScore[4][0] = person;
+									highScore[4][1] = scoreCounter;
 								}
 
-								localStorage.setItem( 'highScore', JSON.stringify(highScore));
+								localStorage.setItem( 'stringfiedHScore', JSON.stringify(highScore));
 
-								localData = JSON.parse(localStorage.getItem('highScore'));
+								var hScoreArray= JSON.parse(localStorage.getItem("stringfiedHScore"));
+
 
 								//console.log(person);
-								window.alert(`HIGH SCORE: \n\n${Object.keys(highScore)[0]}  :  ${Object.values(highScore)[0]}\n${Object.keys(highScore)[1]}  :  ${Object.values(highScore)[1]}\n${Object.keys(highScore)[2]}  :  ${Object.values(highScore)[2]}\n${Object.keys(highScore)[3]}  :  ${Object.values(highScore)[3]}\n${Object.keys(highScore)[4]}  :  ${Object.values(highScore)[4]}`);
+								window.alert(`HIGH SCORE: \n\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[0][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[0][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[1][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[1][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[2][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[2][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[3][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[3][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[4][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[4][1]}`);
 							}
 						})();
 					}, 500);
@@ -227,6 +230,9 @@ Player.prototype.handleInput = function(key) {
 		//player.sprite = sprite[arrivedXTimes];
 		player = new Player(200, 400, sprite[arrivedXTimes]);
 		score++;
+		scoreCounter = (function(){
+			return score;
+		}());
 
 		if(arrivedXTimes % 5 === 0) {
 			arrivedXTimes = 0;
@@ -305,7 +311,7 @@ localStorage.setItem('siteDescription', siteDescription);
 /*document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Javascript Scoreboard</h1>');
 var header = document.getElementsByTagName('h1')[0],
 */
-var
+/*var
 	highScore = {
 		person: 50,
 		person2: 40,
@@ -313,16 +319,16 @@ var
 		person4: 20,
 		person5: 10
 	},
-	localData;
+	localData;*/
 
 /*
 localStorage.setItem( 'person', JSON.stringify(person));
 
 localData = JSON.parse(localStorage.getItem('person'));
 */
-console.log(localData);
+/*console.log(localData);
 console.log(localStorage.getItem('highScore'));
-
+*/
 //header.innerHTML = localData.siteName;
 
 // removeItem makes the item flash quickly, chaing the HTML,
