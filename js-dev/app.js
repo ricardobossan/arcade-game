@@ -18,7 +18,9 @@ let
 	],
 	highScore;
 
-if(localStorage === undefined) {
+if(localStorage.length >= 1) {
+	highScore = JSON.parse(localStorage.getItem("stringfiedHScore"));
+} else {
 	highScore = [
 		["Player 1", 50],
 		["Player 2", 40],
@@ -26,8 +28,6 @@ if(localStorage === undefined) {
 		["Player 4", 20],
 		["Player 5", 10]
 	];
-} else {
-	highScore = JSON.parse(localStorage.getItem("stringfiedHScore"));
 }
 
 const timer = function myTimer() {
