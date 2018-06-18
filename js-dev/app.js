@@ -98,19 +98,19 @@ Enemy.prototype.update = function(dt) {
 									highScore[2][0] = person;
 									highScore[2][1] = scoreCounter;
 								}
-								if(scoreCounter >= 22 && scoreCounter < 30) {
+								if(scoreCounter >= 20 && scoreCounter < 30) {
 									highScore[3][0] = person;
 									highScore[3][1] = scoreCounter;
 								}
-								if(scoreCounter >= 10 && scoreCounter < 22) {
+								if(scoreCounter >= 10 && scoreCounter < 20) {
 									highScore[4][0] = person;
 									highScore[4][1] = scoreCounter;
 								}
 
 								localStorage.setItem( 'stringfiedHScore', JSON.stringify(highScore));
 
-								var hScoreArray= JSON.parse(localStorage.getItem("stringfiedHScore"));
-
+/*								var hScoreArray= JSON.parse(localStorage.getItem("stringfiedHScore"));
+*/
 
 								//console.log(person);
 								window.alert(`HIGH SCORE: \n\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[0][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[0][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[1][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[1][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[2][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[2][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[3][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[3][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[4][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[4][1]}`);
