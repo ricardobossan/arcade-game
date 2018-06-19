@@ -2,8 +2,57 @@
 	window.alert(`Help the 5 children make it to the other side!`);
 })();
 
-// Logic for timer, located at top-right corner
-let
+// the gV object (instance of this constructor function, will integrate the names of most variables withing this code, as oposed to using global variables, which could be changed by the console)(it stands as short for "global variables")
+function Variables (
+	s,
+	m,
+	h,
+	round,
+	gameSpeed,
+	arrivedXTimes,
+	score,
+	scoreCounter,
+	sprite,
+	highScore
+) {
+	this.s = s;
+	this.m = m;
+	this.h = h;
+	this.round = round;
+	this.gameSpeed = gameSpeed;
+	this.arrivedXTimes = arrivedXTimes;
+	this.score = score;
+	scoreCounter;
+	this.sprite = sprite/*[
+		'images/char-boy.png',
+		'images/char-cat-girl.png',
+		'images/char-horn-girl.png',
+		'images/char-pink-girl.png',
+		'images/char-princess-girl.png'
+	]*/;
+	this.highScore = highScore;
+}
+// creates secure "global variables"
+const gV = new Variables(
+	0,
+	0,
+	0,
+	1,
+	1,
+	0,
+	0,
+	"",
+	[
+		'images/char-boy.png',
+		'images/char-cat-girl.png',
+		'images/char-horn-girl.png',
+		'images/char-pink-girl.png',
+		'images/char-princess-girl.png'
+	],
+	""
+);
+console.log(gV);
+/*let
 	s = 0,
 	m = 0,
 	h = 0,
@@ -19,12 +68,12 @@ let
 		'images/char-pink-girl.png',
 		'images/char-princess-girl.png'
 	],
-	highScore;
-
+	gV.highScore;
+*/
 if(localStorage.length >= 1) {
-	highScore = JSON.parse(localStorage.getItem("stringfiedHScore"));
+	gV.highScore = JSON.parse(localStorage.getItem("stringfiedHScore"));
 } else {
-	highScore = [
+	gV.highScore = [
 		["Guts", 50],
 		["Griffith", 40],
 		["Casca", 30],
@@ -33,14 +82,15 @@ if(localStorage.length >= 1) {
 	];
 }
 
+// Logic for timer, located at top-right corner
 const timer = function myTimer() {
-	s++;
-	if (s >= 60) {
-		s = 0;
-		m++;
-		if (m >= 60) {
-			m = 0;
-			h++;
+	gV.s++;
+	if (gV.s >= 60) {
+		gV.s = 0;
+		gV.m++;
+		if (gV.m >= 60) {
+			gV.m = 0;
+			gV.h++;
 		}
 	}
 
@@ -50,9 +100,6 @@ const timer = function myTimer() {
 // runs timer function after 1 second
 setTimeout(timer, 1000);
 
-
-
-console.log(score);
 // Enemy's constructor function
 let Enemy = function(x, y, speed) {
 
@@ -89,35 +136,35 @@ Enemy.prototype.update = function(dt) {
 								window.alert("Don't be shy!");
 								askName();
 							} else {
-								if(scoreCounter >= 50) {
-									highScore[0][0] = person;
-									highScore[0][1] = scoreCounter;
+								if(gV.scoreCounter >= 50) {
+									gV.highScore[0][0] = person;
+									gV.highScore[0][1] = gV.scoreCounter;
 								}
-								if(scoreCounter >= 40 && scoreCounter < 50) {
-									highScore[1][0] = person;
-									highScore[1][1] = scoreCounter;
+								if(gV.scoreCounter >= 40 && gV.scoreCounter < 50) {
+									gV.highScore[1][0] = person;
+									gV.highScore[1][1] = gV.scoreCounter;
 								}
-								if(scoreCounter >= 30 && scoreCounter < 40) {
-									highScore[2][0] = person;
-									highScore[2][1] = scoreCounter;
+								if(gV.scoreCounter >= 30 && gV.scoreCounter < 40) {
+									gV.highScore[2][0] = person;
+									gV.highScore[2][1] = gV.scoreCounter;
 								}
-								if(scoreCounter >= 20 && scoreCounter < 30) {
-									highScore[3][0] = person;
-									highScore[3][1] = scoreCounter;
+								if(gV.scoreCounter >= 20 && gV.scoreCounter < 30) {
+									gV.highScore[3][0] = person;
+									gV.highScore[3][1] = gV.scoreCounter;
 								}
-								if(scoreCounter >= 10 && scoreCounter < 20) {
-									highScore[4][0] = person;
-									highScore[4][1] = scoreCounter;
+								if(gV.scoreCounter >= 10 && gV.scoreCounter < 20) {
+									gV.highScore[4][0] = person;
+									gV.highScore[4][1] = gV.scoreCounter;
 								}
 
-								localStorage.setItem( 'stringfiedHScore', JSON.stringify(highScore));
+								localStorage.setItem( 'stringfiedHScore', JSON.stringify(gV.highScore));
 
 								window.alert(`HIGH SCORE: \n\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[0][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[0][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[1][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[1][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[2][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[2][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[3][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[3][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[4][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[4][1]}`);
 							}
 						})();
 					}, 500);
 					player.gameOver();
-					player = new Player(200, 400, sprite[0]);
+					player = new Player(200, 400, gV.sprite[0]);
 				}
 			}
 		})();
@@ -126,7 +173,7 @@ Enemy.prototype.update = function(dt) {
 	// when off canvas, reset the x axis position of enemy to move across again
 	if (this.x > 550) {
 		this.x = -100;
-		this.speed = 150 + (gameSpeed * (Math.floor(Math.random() * 300)));
+		this.speed = 150 + (gV.gameSpeed * (Math.floor(Math.random() * 300)));
 	}
 };
 
@@ -157,10 +204,10 @@ var Player = function(x, y, sprite) {
 		s = 0;
 		player.x = 200;
 		player.y = 400;
-		gameSpeed = 1.1;
-		round = 1;
-		score = 0;
-		arrivedXTimes = 0;
+		gV.gameSpeed = 1.1;
+		gV.round = 1;
+		gV.score = 0;
+		gV.arrivedXTimes = 0;
 	};
 };
 
@@ -175,20 +222,20 @@ Player.prototype.render = function() {
 	// each time the player reaches the water
 	ctx.font = '45px impact';
 	ctx.fillStyle = 'white';
-	ctx.fillText(`Round ${round}`, 10, 108);
-	ctx.strokeText(`Round ${round}`, 10, 108);
+	ctx.fillText(`Round ${gV.round}`, 10, 108);
+	ctx.strokeText(`Round ${gV.round}`, 10, 108);
 
 	// renders time counter
 	ctx.font = '24px impact';
 	ctx.fillStyle = 'white';
-	ctx.fillText(`${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`, 380, 82);
-	ctx.strokeText(`${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`, 380, 82);
+	ctx.fillText(`${gV.h > 9 ? gV.h : "0" + gV.h} : ${gV.m > 9 ? gV.m : "0" + gV.m} : ${gV.s > 9 ? gV.s : "0" + gV.s}`, 380, 82);
+	ctx.strokeText(`${gV.h > 9 ? gV.h : "0" + gV.h} : ${gV.m > 9 ? gV.m : "0" + gV.m} : ${gV.s > 9 ? gV.s : "0" + gV.s}`, 380, 82);
 	// updates the score counter, at the top-right corner of the canvas,
 	// each time the player reaches the water
 	ctx.font = '30px impact';
 	ctx.fillStyle = 'white';
-	ctx.fillText(`Score: ${score}`, 380, 118);
-	ctx.strokeText(`Score: ${score}`, 380, 118);
+	ctx.fillText(`Score: ${gV.score}`, 380, 118);
+	ctx.strokeText(`Score: ${gV.score}`, 380, 118);
 };
 
 // creates 3 instances of the Enemy constructor, at the positions provided by
@@ -198,12 +245,12 @@ Player.prototype.render = function() {
 let allEnemies = [];
 let enemiesY = [63, 143, 223];
 for(let enemyY of enemiesY) {
-	let enemy = new Enemy(0, enemyY, 150 + (gameSpeed * (Math.floor(Math.random() * 400))));
+	let enemy = new Enemy(0, enemyY, 150 + (gV.gameSpeed * (Math.floor(Math.random() * 400))));
 	allEnemies.push(enemy);
 }
 
 // instantiates the player object, from the Player constructor
-let player = new Player(200, 400, sprite[0]);
+let player = new Player(200, 400, gV.sprite[0]);
 
 // handles player movement on input, and keeps it within canvas limits
 Player.prototype.handleInput = function(key) {
@@ -221,21 +268,21 @@ Player.prototype.handleInput = function(key) {
 		this.x -= 100;
 	}
 	if(player.y <= -10) {
-		arrivedXTimes++;
+		gV.arrivedXTimes++;
 		player.x = 200;
 		player.y = 400;
-		player = new Player(200, 400, sprite[arrivedXTimes]);
-		score++;
-		scoreCounter = (function(){
-			return score;
+		player = new Player(200, 400, gV.sprite[gV.arrivedXTimes]);
+		gV.score++;
+		gV.scoreCounter = (function(){
+			return gV.score;
 		}());
 
-		if(arrivedXTimes % 5 === 0) {
-			arrivedXTimes = 0;
-			round ++;
-			window.alert(`Congratulations!! You unlocked the Round ${round} difficulty!`);
-			gameSpeed *= 1.3;
-			player = new Player(200, 400, sprite[arrivedXTimes]);
+		if(gV.arrivedXTimes % 5 === 0) {
+			gV.arrivedXTimes = 0;
+			gV.round ++;
+			window.alert(`Congratulations!! You unlocked the Round ${gV.round} difficulty!`);
+			gV.gameSpeed *= 1.3;
+			player = new Player(200, 400, gV.sprite[gV.arrivedXTimes]);
 		}
 	}
 };
