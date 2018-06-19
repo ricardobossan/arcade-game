@@ -1,4 +1,7 @@
-window.alert(`Help the 5 children make it to the other side!`);
+(() => {
+	window.alert(`Help the 5 children make it to the other side!`);
+})();
+
 // Logic for timer, located at top-right corner
 let
 	s = 0,
@@ -109,10 +112,6 @@ Enemy.prototype.update = function(dt) {
 
 								localStorage.setItem( 'stringfiedHScore', JSON.stringify(highScore));
 
-/*								var hScoreArray= JSON.parse(localStorage.getItem("stringfiedHScore"));
-*/
-
-								//console.log(person);
 								window.alert(`HIGH SCORE: \n\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[0][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[0][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[1][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[1][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[2][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[2][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[3][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[3][1]}\n${JSON.parse(localStorage.getItem("stringfiedHScore"))[4][0]} :  ${JSON.parse(localStorage.getItem("stringfiedHScore"))[4][1]}`);
 							}
 						})();
@@ -149,7 +148,6 @@ var Player = function(x, y, sprite) {
 	this.resetPosition = function () {
 		player.x = 200;
 		player.y = 400;
-//		arrivedXTimes = 0;
 	};
 
 	// returns player object to it's initial location
@@ -166,12 +164,12 @@ var Player = function(x, y, sprite) {
 	};
 };
 
-
 Player.prototype.update = function(dt) {
 };
 
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function() {
+
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 	// each time the player reaches the water
@@ -180,8 +178,7 @@ Player.prototype.render = function() {
 	ctx.fillText(`Round ${round}`, 10, 108);
 	ctx.strokeText(`Round ${round}`, 10, 108);
 
-
-	// each time the player reaches the water
+	// renders time counter
 	ctx.font = '24px impact';
 	ctx.fillStyle = 'white';
 	ctx.fillText(`${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`, 380, 82);
@@ -227,7 +224,6 @@ Player.prototype.handleInput = function(key) {
 		arrivedXTimes++;
 		player.x = 200;
 		player.y = 400;
-		//player.sprite = sprite[arrivedXTimes];
 		player = new Player(200, 400, sprite[arrivedXTimes]);
 		score++;
 		scoreCounter = (function(){
@@ -243,19 +239,6 @@ Player.prototype.handleInput = function(key) {
 		}
 	}
 };
-
-
-/*const victory = (() => {
-	if(score === 5) {
-		var person = window.confirm("Congratulations! Please, enter your name:", "Unknow");
-		if(person === null || person === "") {
-			txt = "Don't be shy!";
-		} else {"Hello" + person + "!";
-		}
-	}
-})();*/
-//victory();
-//document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Player</h1>');
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -283,54 +266,3 @@ window.addEventListener("keydown", function(e) {
 		e.preventDefault();
 	}
 }, false);
-
-// High score
-
-/*
-// # [An Introductiono to Local Storage with JavaScript](https://www.youtube.com/watch?v=T9GWHFDcELQ)
-// Set and Set Local Storage items
-
-localStorage.setItem('siteName', 'My Site');
-localStorage.setItem('siteDescription', 'siteDescription');
-
-siteName = localStorage.getItem('siteName');
-header.innerHTML = siteName;
-
-// ## Innefficient way to store variables. Lots and lots of variables
-var siteName = 'My Site',
-	siteDescription = 'Another JS Site';
-
-localStorage.setItem('siteName', siteName);
-localStorage.setItem('siteDescription', siteDescription);
-
-// Better way is to store the multiple data in a single local key/value pair
-// in order for local storage to store information, it need to store it as strings.
-// json files store strings
-*/
-
-/*document.querySelector('body').insertAdjacentHTML('afterbegin', '<h1>Javascript Scoreboard</h1>');
-var header = document.getElementsByTagName('h1')[0],
-*/
-/*var
-	highScore = {
-		person: 50,
-		person2: 40,
-		person3: 30,
-		person4: 20,
-		person5: 10
-	},
-	localData;*/
-
-/*
-localStorage.setItem( 'person', JSON.stringify(person));
-
-localData = JSON.parse(localStorage.getItem('person'));
-*/
-/*console.log(localData);
-console.log(localStorage.getItem('highScore'));
-*/
-//header.innerHTML = localData.siteName;
-
-// removeItem makes the item flash quickly, chaing the HTML,
-// then vanishing from the Application//Resources panel, at chrome dev tools
-//localStorage.removeItem('siteName');
