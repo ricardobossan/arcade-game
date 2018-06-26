@@ -4,7 +4,7 @@ describe('This code should set the enemy objects:', () => {
 	describe('Enemy()\'s instances given parameters should pass', () => {
 		it('Enemy.sprite references correct image location', () => {
 			matchArray = [];
-			allEnemies.forEach(function(element) {
+			gV.allEnemies.forEach(function(element) {
 				matchArray.push(element.sprite)
 			});
 			expect(matchArray[0, 1, 2]).toEqual('images/enemy-bug.png');
@@ -16,13 +16,13 @@ describe('This code should set the enemy objects:', () => {
 
 		describe('defines Enemy()\'s instances initial location by pixel', () => {
 			it('initial location value for enemy1', () => {
-				expect(allEnemies[0].y).toBe(63);
+				expect(gV.allEnemies[0].y).toBe(63);
 			});
 			it('initial location value for enemy2', () => {
-				expect(allEnemies[1].y).toBe(143);
+				expect(gV.allEnemies[1].y).toBe(143);
 			});
 			it('initial location value for enemy3', () => {
-				expect(allEnemies[2].y).toBe(223);
+				expect(gV.allEnemies[2].y).toBe(223);
 			});
 		});
 	});
