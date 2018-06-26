@@ -26,6 +26,8 @@
  * @param {function} scoreCounter returns incremented score
  * @param {string} sprite object's sprite
  * @param {array} highScore player's name/score, updated upon score, to be saved and loaded, on localStorage
+ * @param {array} allEnemies empty array into which instances of the Enemy() constructor will bed pushed
+ * @param {array} enemiesY positions where instances of the Enemy() constructor will start, on the y axis
  */
 function Variables (
 	s,
