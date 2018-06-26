@@ -16,18 +16,18 @@
 /**
  * The gV object (instance of the following constructor function), will provide it's properties as variables for use in most functions withing this game's code, as oposed to using global variables, which could be changed by users in the console) (as a clarification: The 'gV' object name would stand as short for "global variables")
  * @constructor
- * @param {number} s seconds, for time() andEnemy.prototpe.update() functions
- * @param {number} m minutes, for time() andEnemy.prototpe.update() functions
- * @param {number} h hours, for time() andEnemy.prototpe.update() functions
- * @param {number} round increments each time the player arrives at water
- * @param {number} gameSpeed increments each round
- * @param {number} arrivedXTimes defines the player's sprite for that round
- * @param {number} score increments each round
- * @param {function} scoreCounter returns incremented score
- * @param {string} sprite object's sprite
- * @param {array} highScore player's name/score, updated upon score, to be saved and loaded, on localStorage
- * @param {array} allEnemies empty array into which instances of the Enemy() constructor will bed pushed
- * @param {array} enemiesY positions where instances of the Enemy() constructor will start, on the y axis
+ * @param {number} s - seconds, for time() andEnemy.prototpe.update() functions
+ * @param {number} m - minutes, for time() andEnemy.prototpe.update() functions
+ * @param {number} h - hours, for time() andEnemy.prototpe.update() functions
+ * @param {number} round - increments each time the player arrives at water
+ * @param {number} gameSpeed - increments each round
+ * @param {number} arrivedXTimes - defines the player's sprite for that round
+ * @param {number} score - increments each round
+ * @param {function} scoreCounter - returns incremented score
+ * @param {string} sprite - object's sprite
+ * @param {array} highScore - player's name/score, updated upon score, to be saved and loaded, on localStorage
+ * @param {array} allEnemies - empty array into which instances of the Enemy() constructor will bed pushed
+ * @param {array} enemiesY - positions where instances of the Enemy() constructor will start, on the y axis
  */
 function Variables (
 	s,
@@ -60,7 +60,9 @@ function Variables (
 
 /**
  * Instantiates the Variables() Constructor Function
+ * @memberof Variables
  * @instance
+ * @type {object}
  * The arguments passed here work as values for the properties to be used in this code's functions. This kind of creates "secure global variables", for use in functions
  * When referenced by a function, each property of the gV object will be prefixed by this object's name (gV)
  */
@@ -87,7 +89,7 @@ const gV = new Variables(
 
 /**
  * Logic for timer
- * @function
+ * @function timer
  */
 const timer = function myTimer() {
 	gV.s++;
@@ -113,9 +115,9 @@ setTimeout(timer, 1000);
 /**
  * Enemy Class
  * @constructor
- * @param {number} x enemy's x axis position
- * @param {number} y enemy's y axis position
- * @param {number} speed random number generated for use in the Enemy.prototype.update() method
+ * @param {number} x - enemy's x axis position
+ * @param {number} y - enemy's y axis position
+ * @param {number} speed - random number generated for use in the Enemy.prototype.update() method
  */
 let Enemy = function(x, y, speed) {
 
@@ -130,15 +132,17 @@ let Enemy = function(x, y, speed) {
  * Updates the enemy's position, required method for game
  * @memberof Enemy()
  * @function update
- * @param {number} dt a time delta between ticks
+ * @param {number} dt - a time delta between ticks
  */
 Enemy.prototype.update = function(dt) {
 	/**
 	 * Multiplies any movement by the dt parameter, which will ensure the game runs at the same speed for all computers
+	 * @type {number}
 	 */
 	this.x += this.speed * dt;
 	/**
 	 * Checks for colliision between the player and enemy objects
+	 * function checksCollision
 	 */
 	(function() {
 		(function() {
@@ -224,6 +228,8 @@ Enemy.prototype.update = function(dt) {
 					player.gameOver();
 					/**
 					 * resets player object, by reinstantiating the Player() Constructor
+					 * @memberof Player
+					 * @instance
 					 */
 					player = new Player(200, 400, gV.sprite[0]);
 				}
@@ -253,9 +259,9 @@ Enemy.prototype.render = function() {
 /**
  * Player Class
  * @constructor
- * @param {number} x player's position at x axis
- * @param {number} y player's position at y axis
- * @param {string} sprite player's sprite
+ * @param {number} x - player's position at x axis
+ * @param {number} y - player's position at y axis
+ * @param {string} sprite - player's sprite
  */
 var Player = function(x, y, sprite) {
 	this.sprite = sprite;
@@ -324,8 +330,9 @@ Player.prototype.render = function() {
  the gV.enemiesY array, and adds them to the gV.allEnemies array,
  to be provided to the updateEntities() and renderEntities() functions
  at the `engine.js` file
+ * @memberof Enemy
+ * @instance
  */
-
 for(let enemyY of gV.enemiesY) {
 	let enemy = new Enemy(0, enemyY, 150 + (gV.gameSpeed * (Math.floor(Math.random() * 400))));
 	gV.allEnemies.push(enemy);
@@ -333,10 +340,14 @@ for(let enemyY of gV.enemiesY) {
 
 /**
  * instantiates the player object, from the Player() constructor
+ * @memberof Player
+ * @instance
  */
 let player = new Player(200, 400, gV.sprite[0]);
 
 /**
+ * @memberof Player
+ * @function handleInput
  * handles player movement on input, and keeps it within canvas limits
  */
 Player.prototype.handleInput = function(key) {
