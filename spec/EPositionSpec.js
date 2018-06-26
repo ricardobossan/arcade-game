@@ -28,7 +28,6 @@ describe('This code should set the enemy objects:', () => {
 	});
 });
 describe('creates the Player Class, making sure that', () => {
-	player = new Player(200, 400, sprite[0, 1, 2, 3, 4]);
 	it('the player object\'s sprite is rendered', () => {
 		expect(player.sprite).toContain("images/char-");
 	});
@@ -42,16 +41,13 @@ describe('creates the Player Class, making sure that', () => {
 		expect(ctx).not.toBe();
 	});
 	it('score should be updated when player arrives in the water', () => {
-		score = 0;
 		(() => {
+			gV.score = 0;
 			for(var i = 0; i <= 4; i++) {
 				player.handleInput('up');
-				//if(player.y <= -10) {
-				//	score++;
-				//}
 			}
 		})();
-		expect(score).toEqual(1);
+		expect(gV.score).toEqual(1);
 	})
 });
 describe('A Prompt event', function() {
