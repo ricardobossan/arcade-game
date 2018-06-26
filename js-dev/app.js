@@ -3,7 +3,7 @@
  * @author Ricardo Bossan ricardobossan@gmail.com
  *
  *@todo
- 	* pass `allEnemies` and `enemiesY arrays into the `gV` constructor
+ 	* pass `gV.allEnemies` and `gV.enemiesY arrays into the `Variables()` constructor
  	* include them into the constructor's parameter list and the respective arguments in it's instances
  	* adjust all code to this change
  */
@@ -37,7 +37,10 @@ function Variables (
 	score,
 	scoreCounter,
 	sprite,
-	highScore
+	highScore,
+	allEnemies,
+	enemiesY
+
 ) {
 	this.s = s;
 	this.m = m;
@@ -49,6 +52,8 @@ function Variables (
 	scoreCounter;
 	this.sprite = sprite;
 	this.highScore = highScore;
+	this.allEnemies = allEnemies;
+	this.enemiesY = enemiesY;
 }
 
 /*
@@ -73,7 +78,9 @@ const gV = new Variables(
 		'images/char-pink-girl.png',
 		'images/char-princess-girl.png'
 	],
-	""
+	"",
+	[],
+	[63, 143, 223]
 );
 
 /*
@@ -129,11 +136,11 @@ Enemy.prototype.update = function(dt) {
 			 * Checks collision for each of the 3 enemy bugs
 			 * If the player arrives at a enemy position, including it's width, collision occurs
 			 */
-			for(let i = 0; i < allEnemies.length; i++) {
-				if ((player.x < allEnemies[i].x + allEnemies[i].width) &&
-				(player.x + player.width > allEnemies[i].x) &&
-				(player.y < allEnemies[i].y + allEnemies[i].height) &&
-				(player.height + player.y > allEnemies[i].y)) {
+			for(let i = 0; i < gV.allEnemies.length; i++) {
+				if ((player.x < gV.allEnemies[i].x + gV.allEnemies[i].width) &&
+				(player.x + player.width > gV.allEnemies[i].x) &&
+				(player.y < gV.allEnemies[i].y + gV.allEnemies[i].height) &&
+				(player.height + player.y > gV.allEnemies[i].y)) {
 					/*
 					 * collision detected!
 					 * reset the player position to it's starting point
@@ -281,16 +288,14 @@ Player.prototype.render = function() {
 };
 /*
  * Creates 3 instances of the Enemy constructor, at the positions provided by
- the enemiesY array, and adds them to the allEnemies array,
+ the gV.enemiesY array, and adds them to the gV.allEnemies array,
  to be provided to the updateEntities() and renderEntities() functions
  at the `engine.js` file
  */
-let allEnemies = [];
-let enemiesY = [63, 143, 223];
 
-for(let enemyY of enemiesY) {
+for(let enemyY of gV.enemiesY) {
 	let enemy = new Enemy(0, enemyY, 150 + (gV.gameSpeed * (Math.floor(Math.random() * 400))));
-	allEnemies.push(enemy);
+	gV.allEnemies.push(enemy);
 }
 
 // instantiates the player object, from the Player() constructor
