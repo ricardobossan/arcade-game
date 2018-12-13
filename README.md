@@ -1,5 +1,7 @@
 # Classic Arcade Game Clone
 
+![App view][0]
+
 ## How To Start The Game
 
 Double-click the `ìndex.html` file, or select it and press `enter`, to start the game.
@@ -38,3 +40,5 @@ Each round, the speed of the bugs increases, progressively making it more diffic
 * 2D collision detection, from [MDN](https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection)
 * Code to prevent window from rolling up and down, from [ncaron](https://github.com/ncaron/frontend-nanodegree-arcade-game/blob/master/js/app.js)
 * Prompt Box Code at [w3schoools.com](https://www.w3schools.com/js/js_popup.aspq)
+
+[0]:/images/app.png
